@@ -24,7 +24,7 @@ class Process(object):
                 pid=self.popen.pid)
 
     def __repr__(self):
-        return '<Process [%r]>' % (self.command,)
+        return '<Process [%s]>' % ' '.join(self.command)
 
     @classmethod
     def from_config(cls, command, data=None, **opts):
