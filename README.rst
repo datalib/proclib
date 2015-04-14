@@ -1,5 +1,13 @@
-Procs: Pythonic Processes
+Procs: Pythonic processes
 =========================
+
+::
+
+        ____  _________  __________
+       / __ \/ ___/ __ \/ ___/ ___/
+      / /_/ / /  / /_/ / /__(__  )
+     / .___/_/   \____/\___/____/
+    /_/
 
 Procs is a high level wrapper/abstraction around the standard
 library subprocess module, written in Python, which aims to
