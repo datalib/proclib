@@ -7,10 +7,12 @@ class Process(object):
                     stdout=PIPE, stdin=PIPE,
                     stderr=PIPE)
 
-    def __init__(self, command, data, popen):
+    def __init__(self, command, data=None, **opts):
+        options = self.defaults.copy()
+        options.update(opts)
+        self.popen = Popen(args=command, **options)
         self.command = command
         self.data = data
-        self.popen = popen
 
     def run(self):
         stdout, stderr = self.popen.communicate(self.data)
@@ -21,16 +23,8 @@ class Process(object):
                 stdout=stdout,
                 stderr=stderr,
                 returncode=status,
-                pid=self.popen.pid)
+                pid=self.popen.pid,
+                )
 
     def __repr__(self):
         return '<Process [%s]>' % ' '.join(self.command)
-
-    @classmethod
-    def from_config(cls, command, data=None, **opts):
-        conf = cls.defaults.copy()
-        conf['args'] = command
-        conf.update(opts)
-        return Process(command,
-                       data,
-                       Popen(**conf))

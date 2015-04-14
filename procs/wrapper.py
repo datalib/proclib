@@ -17,8 +17,7 @@ def spawn(cmds, env=None, cwd=None, data=None):
     previous_stdin = PIPE
 
     for cmd in reversed(cmds):
-        proc = Process.from_config(cmd, cwd=cwd, env=env,
-                                   stdout=previous_stdin)
+        proc = Process(cmd, cwd=cwd, env=env, stdout=previous_stdin)
         procs.append(proc)
         previous_stdin = proc.popen.stdin
 
