@@ -4,7 +4,8 @@ from procs.response import Response
 
 class Process(object):
     defaults = dict(universal_newlines=True,
-                    stdout=PIPE, stdin=PIPE)
+                    stdout=PIPE, stdin=PIPE,
+                    stderr=PIPE)
 
     def __init__(self, command, data, popen):
         self.command = command

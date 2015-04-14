@@ -12,3 +12,6 @@ class Response(object):
     @property
     def ok(self):
         return self.returncode == 0
+
+    def __repr__(self):
+        return '<Response [%s]>' % self.command[0]

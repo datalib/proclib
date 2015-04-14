@@ -8,8 +8,8 @@ wrapper around the subprocess library. Usage example:
 .. code-block:: python
 
     >>> from procs.api import spawn
-    >>> proc = spawn('cat output.log')
-    >>> proc.return_code
-    0
-    >>> proc.stdout
-    ...
+    >>> proc = spawn(['cat', 'grep at'], data='at\n')
+    >>> proc.ok
+    True
+    >>> proc.history
+    [<Response [cat]>]

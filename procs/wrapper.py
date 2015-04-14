@@ -1,15 +1,18 @@
+import shlex
 from subprocess import PIPE
 from procs.process import Process
 
 
-def spawn(cmd, env=None, cwd=None, data=None):
-    return Process.from_config(cmd,
-                               data=data,
-                               env=env,
-                               cwd=cwd).run()
+def convert_args(cmds):
+    for item in cmds:
+        if isinstance(item, str):
+            yield shlex.split(item)
+            continue
+        yield item
 
 
-def pipe(cmds, env=None, cwd=None, data=None):
+def spawn(cmds, env=None, cwd=None, data=None):
+    cmds = list(convert_args(cmds))
     procs = []
     previous_stdin = PIPE
 
