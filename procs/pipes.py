@@ -2,22 +2,9 @@ from subprocess import PIPE
 from procs.process import Process
 
 
-def _identity(x):
-    return x
-
-
-class Handler(object):
-    def on_start(self, proc):
-        pass
-
-    def on_exit(self, proc):
-        pass
-
-
 class Pipe(object):
-    def __init__(self, commands, data, handler=None, **opts):
+    def __init__(self, commands, data, **opts):
         self.commands = commands
-        self.handler = handler or Handler()
         self.data = data
         self.opts = opts
 
@@ -27,7 +14,6 @@ class Pipe(object):
     def spawn(self, cmd, stdout=None):
         return Process(
                 command=cmd,
-                handler=self.handler,
                 stdout=stdout,
                 **self.opts
                 )
