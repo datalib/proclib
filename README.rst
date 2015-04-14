@@ -23,3 +23,24 @@ Overview
         True
         >>> proc.history
         [<Response [cat]>]
+
+    You can also make 'hooks' for your processes, i.e. functions
+    that will be called when certain events occur. Currently
+    there are only two hooks available:
+
+     - **on_start**: Ran before running the Popen object.
+     - **on_exit**: Ran when the process terminates.
+
+    They will all be called with the ``Process`` object, a
+    simple wrapper around a ``Popen`` object. You can add
+    hooks by subclassing the ``Handler`` class, for example::
+
+        from procs.pipes import Handler
+
+        class MyHandler(Handler):
+            def on_start(self, proc):
+                print(proc)
+
+        >>> spawn(['echo hi'], handler=MyHandler())
+        <Process [echo hi]>
+        <Response [echo]>

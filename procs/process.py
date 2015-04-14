@@ -28,9 +28,9 @@ class Process(object):
                 )
 
     def run(self):
-        self.handler.on_start(self.popen)
+        self.handler.on_start(self)
         res = self.get_response()
-        self.handler.on_exit(self.popen)
+        self.handler.on_exit(self)
         return res
 
     def __repr__(self):
