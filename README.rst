@@ -40,9 +40,9 @@ You can provide ``hooks`` parameter which contains a mapping of
 event-names to lists of callbacks. Currently only two hooks
 are supported:
 
-- ``success``: Called when the process ran succesfully, i.e. the
-    return code is 0.
-- ``error``: Called otherwise.
+- ``success`` - Called when the process ran succesfully,
+  i.e. the return code is 0.
+- ``error`` - Called otherwise.
 
 Example of using the hooking API::
 
