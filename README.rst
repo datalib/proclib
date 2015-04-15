@@ -13,7 +13,7 @@ Proclib: pythonic processes
     /_/
 
 
-Procs is a high level wrapper/abstraction around the standard
+Proclib is a high level wrapper/abstraction around the standard
 library subprocess module, written in Python, which aims to
 simplify the usage of Unix utilities right from Python and help
 the developer focus on the commands and not the code which calls
@@ -44,7 +44,7 @@ You can provide ``hooks`` parameter which contains a mapping of
 event-names to lists of callbacks. Currently only two hooks
 are supported:
 
-- ``success`` - Called when the process ran succesfully,
+- ``success`` - Called when the process ran successfully,
   i.e. the return code is 0.
 - ``error`` - Called otherwise.
 
