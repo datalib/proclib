@@ -2,24 +2,28 @@ import shlex
 
 
 def str_parse(cmds):
+    args = []
     buff = []
     for item in shlex.split(cmds):
         if item == '|':
-            yield buff
+            args.append(buff)
             buff = []
             continue
         buff.append(item)
 
     if buff:
-        yield buff
+        args.append(buff)
+    return args
 
 
 def list_parse(cmds):
+    args = []
     for item in cmds:
         if isinstance(item, str):
-            yield shlex.split(item)
+            args.append(shlex.split(item))
             continue
-        yield item
+        args.append(item)
+    return args
 
 
 def convert_args(cmds):

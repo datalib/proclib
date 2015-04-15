@@ -11,14 +11,22 @@ def dispatch_hook(hooks, hook, data):
 
 
 class Process(object):
+    defaults = dict(universal_newlines=True,
+                    stdout=PIPE,
+                    stderr=PIPE,
+                    stdin=PIPE)
+
     def __init__(self, command, hooks={}, data=None, **opts):
-        self.popen = Popen(args=command, **opts)
+        conf = self.defaults.copy()
+        conf.update(opts)
+
+        self.popen = Popen(args=command, **conf)
         self.command = command
         self.hooks = hooks
         self.data = data
 
     def dispatch(self, hook):
-        dispatch_hook(self.hooks, hook, self.popen)
+        dispatch_hook(self.hooks, hook, self)
 
     @contextmanager
     def popen_context(self):

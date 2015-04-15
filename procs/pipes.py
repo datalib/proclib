@@ -16,10 +16,7 @@ class Pipe(object):
         return Process(
                 command=cmd,
                 hooks=self.hooks,
-                stdin=PIPE,
                 stdout=stdout,
-                stderr=PIPE,
-                universal_newlines=True,
                 **self.opts
                 )
 

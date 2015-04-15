@@ -44,7 +44,9 @@ are supported:
   i.e. the return code is 0.
 - ``error`` - Called otherwise.
 
-Example of using the hooking API::
+The provided callbacks are called with the Process object, a
+simple wrapper that prepares and runs a Popen object. Example
+of using the hooking API::
 
     spawn(command, hooks={
         'success': [callback1, callback2],
