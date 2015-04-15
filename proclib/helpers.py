@@ -24,16 +24,10 @@ def str_parse(cmds):
 
 
 def list_parse(cmds):
-    args = []
+    rv = []
     for item in cmds:
         if isinstance(item, str):
-            args.append(shlex.split(item))
+            rv.extend(str_parse(item))
             continue
-        args.append(item)
-    return args
-
-
-def convert_args(cmds):
-    if isinstance(cmds, str):
-        return str_parse(cmds)
-    return list_parse(cmds)
+        rv.append(list(item))
+    return rv

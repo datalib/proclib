@@ -1,22 +1,27 @@
-from proclib.helpers import str_parse, list_parse,\
-        convert_args, dispatch_hook
+from pytest import fixture
+from proclib.helpers import str_parse, list_parse, dispatch_hook
 
 
-def test_str_parse():
-    assert str_parse('cat') == [['cat']]
-    assert str_parse('cat | grep') == [['cat'], ['grep']]
+@fixture
+def expected():
+    return [['cat'], ['grep', 'at']]
 
 
-def test_list_parse():
-    assert list_parse(['cat', 'grep']) == [['cat'], ['grep']]
-    assert list_parse([['cat'], 'grep']) == [['cat'], ['grep']]
-    assert list_parse(['cat', 'grep at']) == [['cat'], ['grep', 'at']]
+@fixture(params=[
+    ['cat | grep at'],
+    ['cat', 'grep at'],
+    ['cat', ['grep', 'at']],
+])
+def cmd(request):
+    return request.param
 
 
-def test_convert_args():
-    assert convert_args([['cat'], ['grep']]) == [['cat'], ['grep']]
-    assert convert_args(['cat', ['grep']]) == [['cat'], ['grep']]
-    assert convert_args('cat | grep') == [['cat'], ['grep']]
+def test_str_parse(expected):
+    assert str_parse('cat | grep at') == expected
+
+
+def test_list_parse(cmd, expected):
+    assert list_parse(cmd) == expected
 
 
 def test_dispatch_hook_silent_error():
