@@ -9,25 +9,22 @@ def dispatch_hook(hooks, hook, data):
 
 
 def str_parse(cmds):
-    args = []
     buff = []
     for item in shlex.split(cmds):
         if item == '|':
-            args.append(buff)
+            yield buff
             buff = []
             continue
         buff.append(item)
 
     if buff:
-        args.append(buff)
-    return args
+        yield buff
 
 
 def list_parse(cmds):
-    rv = []
     for item in cmds:
         if isinstance(item, str):
-            rv.extend(str_parse(item))
+            for item in str_parse(item):
+                yield item
             continue
-        rv.append(list(item))
-    return rv
+        yield list(item)

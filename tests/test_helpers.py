@@ -17,11 +17,11 @@ def cmd(request):
 
 
 def test_str_parse(expected):
-    assert str_parse('cat | grep at') == expected
+    assert list(str_parse('cat | grep at')) == expected
 
 
 def test_list_parse(cmd, expected):
-    assert list_parse(cmd) == expected
+    assert list(list_parse(cmd)) == expected
 
 
 def test_dispatch_hook_silent_error():
