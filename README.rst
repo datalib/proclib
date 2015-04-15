@@ -19,14 +19,14 @@ Overview
 --------
 
 `procs.api.spawn(cmd)`
-    Given a list of strings or lists making up commands *cmd*,
-    return a Response object which is the result of piping the
-    commands, i.e. they are run in *parallel*. The *data*
-    parameter can be used to configure the data passed in to
-    the initial process. Usage example::
+    Given a string or list making up commands *cmd*, return
+    a Response object which is the result of piping the commands,
+    i.e. they are run in *parallel*. The *data* parameter can be
+    used to configure the data passed in to the initial process.
+    Usage example::
 
         >>> from procs.api import spawn
-        >>> proc = spawn(['cat', 'grep at'], data='at\n')
+        >>> proc = spawn('cat | grep at', data='at\n')
         >>> proc.ok
         True
         >>> proc.history
