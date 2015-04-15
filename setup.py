@@ -1,27 +1,23 @@
 from setuptools import setup
-from codecs import open
-from os import path
-
-
-here = path.abspath(path.dirname(__file__))
-
-
-with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
-    long_description = f.read()
+import proclib
 
 
 setup(
     name='proclib',
-    version='0.0.1',
+    version=proclib.__version__,
 
     description='pythonic processes',
-    long_description=long_description,
+    long_description=open('README.rst').read(),
+    license='MIT',
 
-    url='https://github.com/datalib/proclib',
     author='Eeo Jun',
     author_email='packwolf58@gmail.com',
+    url='https://github.com/datalib/proclib',
 
-    packages=['proclib'],
+    packages=[
+        'proclib',
+        'proclib.tests',
+        ],
     install_requires=[],
     extras_require={
         'test': ['pytest'],
@@ -30,7 +26,6 @@ setup(
     include_package_data=True,
     zip_safe=False,
 
-    license='MIT',
     keywords='processes unix process datalib',
     classifiers=[
         'Development Status :: 3 - Alpha',
