@@ -1,13 +1,16 @@
 Proclib: pythonic processes
 ===========================
 
+.. image:: https://travis-ci.org/datalib/proclib.svg?branch=master
+    :target: https://travis-ci.org/datalib/proclib
+
 ::
 
-                     _ _ _
-     ___ ___ ___ ___| |_| |_
-    | . |  _| . |  _| | | . |
-    |  _|_| |___|___|_|_|___|
-    |_| processes for humans
+                          ___ __
+       ___  _______  ____/ (_) /
+      / _ \/ __/ _ \/ __/ / / _ \
+     / .__/_/  \___/\__/_/_/_.__/
+    /_/
 
 
 Procs is a high level wrapper/abstraction around the standard
