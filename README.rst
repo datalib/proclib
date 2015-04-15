@@ -26,7 +26,7 @@ Overview
     used to configure the data passed in to the initial process.
     Usage example::
 
-        >>> from procs.api import spawn
+        >>> from proclib.api import spawn
         >>> proc = spawn('cat | grep at', data='at\n')
         >>> proc.ok
         True
