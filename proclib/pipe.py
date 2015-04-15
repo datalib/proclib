@@ -3,6 +3,8 @@ from proclib.process import Process
 
 
 class Pipe(object):
+    process_class = Process
+
     def __init__(self, commands, data, hooks=None, **opts):
         self.commands = commands
         self.hooks = hooks or {}
@@ -13,7 +15,7 @@ class Pipe(object):
         return reversed(self.commands)
 
     def make_process(self, cmd, stdout=PIPE):
-        return Process(
+        return self.process_class(
                 command=cmd,
                 hooks=self.hooks,
                 stdout=stdout,

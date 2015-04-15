@@ -25,21 +25,18 @@ class Process(object):
     @contextmanager
     def popen_context(self):
         yield self.popen
-        if self.popen.returncode != 0:
-            self.dispatch('error')
-            return
-        self.dispatch('success')
+        self.dispatch('error' if self.popen.returncode else
+                      'success')
 
     def run(self):
         with self.popen_context() as popen:
             stdout, stderr = popen.communicate(self.data)
-            status = popen.wait()
             return Response(
                     command=self.command,
                     process=popen,
                     stdout=stdout,
                     stderr=stderr,
-                    returncode=status,
+                    returncode=popen.wait(),
                     pid=popen.pid,
                     )
 
