@@ -1,4 +1,4 @@
-from procs.helpers import str_parse, list_parse, convert_args
+from proclib.helpers import str_parse, list_parse, convert_args
 
 
 def test_str_parse():

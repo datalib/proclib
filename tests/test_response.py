@@ -1,4 +1,4 @@
-from procs.response import Response
+from proclib.response import Response
 
 
 def test_response():

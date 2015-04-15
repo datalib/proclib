@@ -1,5 +1,5 @@
-from procs.pipe import Pipe
-from procs.helpers import convert_args
+from proclib.pipe import Pipe
+from proclib.helpers import convert_args
 
 
 __all__ = ('spawn',)

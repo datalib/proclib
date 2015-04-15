@@ -1,5 +1,5 @@
 from pytest import fixture
-from procs.pipe import Pipe
+from proclib.pipe import Pipe
 
 
 @fixture

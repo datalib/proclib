@@ -1,5 +1,5 @@
 from pytest import mark
-from procs.api import spawn
+from proclib.api import spawn
 
 
 @mark.parametrize('cmd', (

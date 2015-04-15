@@ -1,5 +1,5 @@
 from pytest import fixture
-from procs.process import Process
+from proclib.process import Process
 
 
 @fixture

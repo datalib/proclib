@@ -1,6 +1,6 @@
 from contextlib import contextmanager
 from subprocess import Popen, PIPE
-from procs.response import Response
+from proclib.response import Response
 
 
 def dispatch_hook(hooks, hook, data):

@@ -1,13 +1,14 @@
-Procs: pythonic processes
-=========================
+Proclib: pythonic processes
+===========================
 
 ::
 
-        ____  _________  __________
-       / __ \/ ___/ __ \/ ___/ ___/
-      / /_/ / /  / /_/ / /__(__  )
-     / .___/_/   \____/\___/____/
-    /_/
+                     _ _ _
+     ___ ___ ___ ___| |_| |_
+    | . |  _| . |  _| | | . |
+    |  _|_| |___|___|_|_|___|
+    |_| processes for humans
+
 
 Procs is a high level wrapper/abstraction around the standard
 library subprocess module, written in Python, which aims to
@@ -18,7 +19,7 @@ the commands.
 Overview
 --------
 
-`procs.api.spawn(cmd)`
+`proclib.api.spawn(cmd)`
     Given a string or list making up commands *cmd*, return
     a Response object which is the result of piping the commands,
     i.e. they are run in *parallel*. The *data* parameter can be
