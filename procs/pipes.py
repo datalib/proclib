@@ -3,17 +3,19 @@ from procs.process import Process
 
 
 class Pipe(object):
-    def __init__(self, commands, data, **opts):
+    def __init__(self, commands, data, hooks=None, **opts):
         self.commands = commands
+        self.hooks = hooks or {}
         self.data = data
         self.opts = opts
 
     def order(self):
         return reversed(self.commands)
 
-    def spawn(self, cmd, stdout=PIPE):
+    def make_process(self, cmd, stdout=PIPE):
         return Process(
                 command=cmd,
+                hooks=self.hooks,
                 stdin=PIPE,
                 stdout=stdout,
                 stderr=PIPE,
@@ -25,7 +27,7 @@ class Pipe(object):
         previous_stdin = PIPE
         procs = []
         for cmd in self.order():
-            proc = self.spawn(cmd, previous_stdin)
+            proc = self.make_process(cmd, previous_stdin)
             previous_stdin = proc.popen.stdin
             procs.append(proc)
         procs.reverse()
