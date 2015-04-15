@@ -14,10 +14,7 @@ setup(
     author_email='packwolf58@gmail.com',
     url='https://github.com/datalib/proclib',
 
-    packages=[
-        'proclib',
-        'proclib.tests',
-        ],
+    packages=['proclib'],
     install_requires=[],
     extras_require={
         'test': ['pytest'],
@@ -25,6 +22,7 @@ setup(
 
     include_package_data=True,
     zip_safe=False,
+    platforms='any',
 
     keywords='processes unix process datalib',
     classifiers=[
