@@ -9,9 +9,7 @@ def proc():
 
 def test_dispatch_runs_hook(proc):
     ctx = []
-    hook = ctx.append
-
-    proc.hooks['ev'] = [hook]
+    proc.hooks['ev'] = [ctx.append]
     proc.dispatch('ev')
 
     assert ctx == [proc]
@@ -29,7 +27,6 @@ def test_popen_context_runs_error_hook(proc):
 def test_popen_context_runs_success_hook(proc):
     ctx = []
     proc.hooks['success'] = [ctx.append]
-
     with proc.popen_context():
         proc.popen.returncode = 0
 

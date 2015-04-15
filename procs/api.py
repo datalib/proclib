@@ -1,4 +1,4 @@
-from procs.pipes import Pipe
+from procs.pipe import Pipe
 from procs.helpers import convert_args
 
 

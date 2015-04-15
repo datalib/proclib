@@ -16,13 +16,13 @@ class Process(object):
                     stderr=PIPE,
                     stdin=PIPE)
 
-    def __init__(self, command, hooks={}, data=None, **opts):
+    def __init__(self, command, hooks=None, data=None, **opts):
         conf = self.defaults.copy()
         conf.update(opts)
 
         self.popen = Popen(args=command, **conf)
         self.command = command
-        self.hooks = hooks
+        self.hooks = hooks or {}
         self.data = data
 
     def dispatch(self, hook):
