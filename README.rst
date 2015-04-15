@@ -32,15 +32,21 @@ Overview
         >>> proc.history
         [<Response [cat]>]
 
-    Hooking into the library can be done via the ``hooks``
-    parameter. Currently only two hooks are provided:
+Extending
+---------
 
-    - **success**: Called when return code == 0
-    - **error**: Called when return code > 0
+Extending the library can be done via hooking into the library.
+You can provide ``hooks`` parameter which contains a mapping of
+event-names to lists of callbacks. Currently only two hooks
+are supported:
 
-    Example of using the hooking API::
+- ``success``: Called when the process ran succesfully, i.e. the
+    return code is 0.
+- ``error``: Called otherwise.
 
-        spawn(command, hooks={
-            'success': [callback1, callback2],
-            'error': [callback3],
-        })
+Example of using the hooking API::
+
+    spawn(command, hooks={
+        'success': [callback1, callback2],
+        'error': [callback3],
+    })
