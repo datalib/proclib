@@ -1,16 +1,8 @@
-import shlex
 from procs.pipes import Pipe
+from procs.parse_helpers import convert_args
 
 
 __all__ = ('spawn',)
-
-
-def convert_args(cmds):
-    for item in cmds:
-        if isinstance(item, str):
-            yield shlex.split(item)
-            continue
-        yield item
 
 
 def spawn(cmds, data=None, env=None, cwd=None):
