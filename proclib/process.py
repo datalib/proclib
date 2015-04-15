@@ -1,13 +1,7 @@
 from contextlib import contextmanager
 from subprocess import Popen, PIPE
 from proclib.response import Response
-
-
-def dispatch_hook(hooks, hook, data):
-    if hook in hooks:
-        for item in hooks[hook]:
-            item(data)
-    return data
+from proclib.helpers import dispatch_hook
 
 
 class Process(object):
