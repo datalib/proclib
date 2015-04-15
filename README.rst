@@ -1,4 +1,4 @@
-Procs: Pythonic processes
+Procs: pythonic processes
 =========================
 
 ::
