@@ -3,14 +3,8 @@ from procs.response import Response
 
 
 class Process(object):
-    defaults = dict(universal_newlines=True,
-                    stdout=PIPE, stdin=PIPE,
-                    stderr=PIPE)
-
     def __init__(self, command, data=None, **opts):
-        conf = self.defaults.copy()
-        conf.update(opts)
-        self.popen = Popen(args=command, **conf)
+        self.popen = Popen(args=command, **opts)
         self.command = command
         self.data = data
 

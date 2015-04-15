@@ -11,10 +11,13 @@ class Pipe(object):
     def order(self):
         return reversed(self.commands)
 
-    def spawn(self, cmd, stdout=None):
+    def spawn(self, cmd, stdout=PIPE):
         return Process(
                 command=cmd,
+                stdin=PIPE,
                 stdout=stdout,
+                stderr=PIPE,
+                universal_newlines=True,
                 **self.opts
                 )
 
