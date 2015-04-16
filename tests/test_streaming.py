@@ -3,17 +3,34 @@ from proclib.streaming import StreamProcess, StreamPipe
 
 
 @fixture
-def response(request):
-    return StreamProcess(['echo', 'm']).run()
+def res():
+    return StreamProcess(['cat']).run()
 
 
-def test_response(response):
-    with response:
-        assert response.stdout.read() == 'm\n'
-        assert not response.stderr.read()
-    assert response.stdout.closed
-    assert response.stderr.closed
-    assert response.ok
+def test_response_peaceful(res):
+    _, _ = res.process.communicate('hello')
+    assert res.finished
+    assert res.ok
+
+
+def test_response_killed(res):
+    res.terminate()
+    res.wait()
+
+    assert res.finished
+    assert not res.ok
+
+
+def test_response():
+    r = StreamProcess(['echo', 'm']).run()
+    with r:
+        assert r.stdout.read() == 'm\n'
+        assert not r.stderr.read()
+
+    assert r.finished
+    assert r.stdout.closed
+    assert r.stderr.closed
+    assert r.ok
 
 
 @fixture
