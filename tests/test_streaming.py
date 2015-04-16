@@ -1,40 +1,19 @@
-from subprocess import Popen, PIPE
 from pytest import fixture
-from proclib.streaming import StreamProcess, \
-        StreamResponse, StreamPipe
+from proclib.streaming import StreamProcess, StreamPipe
 
 
 @fixture
 def response(request):
-    p = Popen(['echo', 'm'], stdout=PIPE, stdin=PIPE, stderr=PIPE)
-    res = StreamResponse(['echo', 'm'], p, p.stdout, p.stderr)
-    request.addfinalizer(res.terminate)
-    return res
+    return StreamProcess(['echo', 'm']).run()
 
 
-def test_response_returncode(response):
-    response.wait()
-    assert response.ok
-
-
-def test_response_contextmanager(response):
+def test_response(response):
     with response:
-        assert response.stdout.read() == b'm\n'
+        assert response.stdout.read() == 'm\n'
         assert not response.stderr.read()
     assert response.stdout.closed
     assert response.stderr.closed
-
-
-@fixture
-def process(request):
-    return StreamProcess(['echo', 'm'])
-
-
-def test_process_run(process):
-    res = process.run()
-    with res:
-        assert res.stdout.read() == 'm\n'
-    assert res.ok
+    assert response.ok
 
 
 @fixture
