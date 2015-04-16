@@ -16,19 +16,23 @@ class StreamResponse(Response):
     def wait(self):
         self.process.wait()
 
+    def terminate(self):
+        if not self.finished:
+            self.process.terminate()
+
     @property
     def finished(self):
         return self.returncode is not None
 
     @property
     def returncode(self):
-        self.process.poll()
-        return self.process.returncode
+        return self.process.poll()
 
     def __enter__(self):
         return self
 
     def __exit__(self, *_):
+        self.wait()
         self.stdout.close()
         self.stderr.close()
 
