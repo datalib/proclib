@@ -44,8 +44,8 @@ Overview
     a file as the stdin. Usage example::
 
         >>> from proclib.api import stream
-        >>> r = stream('yes')
+        >>> r = stream('cat', fileobj=open('lorem.txt'))
         >>> for item in r.stdout: print(item)
-        y
-        y
+        Lorem ipsum dolor sit amet, cras rutrum a, vivamus
+        placerat amet vehicula rhoncus interdum, semper in
         ...
