@@ -15,13 +15,6 @@ def test_order(pipe):
     assert list(pipe.order()) == [['grep', 'at'], ['cat']]
 
 
-def test_make_process(pipe):
-    proc = pipe.make_process(['echo', 'hi'])
-
-    assert proc.hooks == pipe.hooks
-    assert proc.run().stdout == 'hi\n'
-
-
 def test_spawn_procs(pipe):
     procs = pipe.spawn_procs()
     assert [p.command for p in procs] == pipe.commands

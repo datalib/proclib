@@ -37,22 +37,6 @@ class Pipe(object):
         """
         return reversed(self.commands)
 
-    def make_process(self, cmd, stdout=PIPE):
-        """
-        Create a Process object that runs *cmd* with
-        the appropriate arguments.
-
-        :param cmd: A command.
-        :param stdout: The stdout file-object, defaults
-            to the PIPE constant.
-        """
-        return self.process_class(
-                command=cmd,
-                hooks=self.hooks,
-                stdout=stdout,
-                **self.opts
-                )
-
     def spawn_procs(self):
         """
         Return a list of processes that have had their
@@ -61,7 +45,12 @@ class Pipe(object):
         previous_stdin = PIPE
         procs = []
         for cmd in self.order():
-            proc = self.make_process(cmd, stdout=previous_stdin)
+            proc = self.process_class(
+                command=cmd,
+                hooks=self.hooks,
+                stdout=previous_stdin,
+                **self.opts
+                )
             previous_stdin = proc.popen.stdin
             procs.append(proc)
         procs.reverse()
