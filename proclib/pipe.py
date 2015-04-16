@@ -1,5 +1,5 @@
 from subprocess import PIPE
-from proclib.process import Process
+from .process import Process
 
 
 class Pipe(object):

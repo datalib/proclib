@@ -1,5 +1,5 @@
-from proclib.pipe import Pipe
-from proclib.helpers import list_parse, str_parse
+from .pipe import Pipe
+from .helpers import list_parse, str_parse
 
 
 __all__ = ('spawn',)

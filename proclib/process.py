@@ -1,7 +1,7 @@
 from contextlib import contextmanager
 from subprocess import Popen, PIPE
-from proclib.response import Response
-from proclib.helpers import dispatch_hook
+from .response import Response
+from .helpers import dispatch_hook
 
 
 class Process(object):
