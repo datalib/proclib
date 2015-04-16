@@ -1,20 +1,51 @@
+"""
+    proclib.pipe
+    ~~~~~~~~~~~~
+
+    Implements the Pipe object.
+"""
+
+
 from subprocess import PIPE
 from .process import Process
 
 
 class Pipe(object):
+    """
+    A Pipe object represents and starts the parallel
+    execution and piping of multiple Processes.
+
+    :param commands: A list of commands.
+    :param hooks: Hooks to be passed to every process.
+    :param data: Data to be piped in to the first process.
+    :param opts: Extra options to be passed to every
+        spawned process.
+    """
+
     process_class = Process
 
-    def __init__(self, commands, data, hooks=None, **opts):
+    def __init__(self, commands, hooks=None, data=None, **opts):
         self.commands = commands
         self.hooks = hooks or {}
         self.data = data
         self.opts = opts
 
     def order(self):
+        """
+        A list of commands which corresponds to the
+        order in which the processes are to be spawned.
+        """
         return reversed(self.commands)
 
     def make_process(self, cmd, stdout=PIPE):
+        """
+        Create a Process object that runs *cmd* with
+        the appropriate arguments.
+
+        :param cmd: A command.
+        :param stdout: The stdout file-object, defaults
+            to the PIPE constant.
+        """
         return self.process_class(
                 command=cmd,
                 hooks=self.hooks,
@@ -23,6 +54,10 @@ class Pipe(object):
                 )
 
     def spawn_procs(self):
+        """
+        Return a list of processes that have had their
+        stdout file handles configured the correct order.
+        """
         previous_stdin = PIPE
         procs = []
         for cmd in self.order():
@@ -33,6 +68,12 @@ class Pipe(object):
         return procs
 
     def run(self):
+        """
+        Runs the processes. Internally this calls the
+        ``spawn_procs`` method but converts them into
+        responses via their ``run`` method and returns
+        a Response object.
+        """
         procs = self.spawn_procs()
         procs[0].data = self.data
 
