@@ -13,10 +13,17 @@ from .pipe import Pipe
 from .streaming import StreamPipe
 
 
-__all__ = ('spawn',)
+__all__ = ('spawn', 'stream')
 
 
 def parse(cmds):
+    """
+    Given a string or list of lists/strings *cmds*,
+    determine and use the correct parser to use and
+    return the results as a list.
+
+    :param cmds: List/String of commands.
+    """
     parser = str_parse if isinstance(cmds, str) else list_parse
     return list(parser(cmds))
 

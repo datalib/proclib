@@ -27,6 +27,11 @@ class Response(object):
         self.setup()
 
     def setup(self):
+        """
+        Set up additional attributes of the Response
+        object. By default this sets up ``returncode``
+        and ``pid``.
+        """
         self.returncode = self.process.returncode
         self.pid = self.process.pid
 
