@@ -8,13 +8,13 @@ from proclib.streaming import StreamProcess, \
 def response(request):
     p = Popen('cat', stdout=PIPE, stdin=PIPE, stderr=PIPE)
     request.addfinalizer(p.terminate)
-    return StreamResponse('cat', p, p.stdout, p.stderr)
+    return StreamResponse(['cat'], p, p.stdout, p.stderr)
 
 
 def test_unfinished_response_returncode(response):
     assert response.returncode is None
     response.process.terminate()
-    assert response.returncode < 0
+    assert not response.ok
 
 
 def test_response_contextmanager(response):
@@ -24,3 +24,16 @@ def test_response_contextmanager(response):
         pass
     assert response.stdout.closed
     assert response.stderr.closed
+
+
+
+@fixture
+def process(request):
+    return StreamProcess(['echo', 'm'])
+
+
+def test_process_run(process):
+    res = process.run()
+    with res:
+        assert res.stdout.read() == 'm\n'
+        assert res.ok
