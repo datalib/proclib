@@ -14,10 +14,10 @@ Proclib: pythonic processes
 
 
 Proclib is a high level wrapper/abstraction around the standard
-library subprocess module, written in Python, which aims to
-simplify the usage of Unix utilities right from Python and help
-the developer focus on the commands and not the code which calls
-the commands.
+library subprocess module, written in Python, with proper piping
+support which aims to simplify the usage of Unix utilities right
+from Python and help the developer focus on the commands and not
+the code which calls the commands.
 
 Overview
 --------
