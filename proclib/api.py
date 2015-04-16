@@ -50,7 +50,7 @@ def spawn(cmds, data=None, env=None, cwd=None):
 
 def stream(cmds, fileobj=PIPE, env=None, cwd=None):
     pipe = StreamPipe(commands=parse(cmds),
-                      data=fileobj,
+                      fileobj=fileobj,
                       env=env,
                       cwd=cwd)
     return pipe.run()

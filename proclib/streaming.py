@@ -92,17 +92,29 @@ class StreamPipe(Pipe):
     """
     Streaming variant of Pipe that uses the
     ``StreamProcess`` as the default Process
-    class to be used.
+    class to be used. A slightly different
+    signature is used:
+
+    :param commands: List of commands.
+    :param fileobj: File-object with valid
+        ``.fileno()`` method.
+    :param opts: Extra options.
     """
 
     process_class = StreamProcess
+    data = None
+
+    def __init__(self, commands, fileobj=None, **opts):
+        self.commands = commands
+        self.fileobj = fileobj
+        self.opts = opts
 
     def order(self):
         return self.commands
 
     def spawn_procs(self):
         procs = []
-        last_stdin = self.data
+        last_stdin = self.fileobj
         for cmd in self.order():
             proc = self.process_class(
                 cmd,
