@@ -24,8 +24,11 @@ class Response(object):
         self.process = process
         self.stdout = stdout
         self.stderr = stderr
-        self.returncode = process.returncode
-        self.pid = process.pid
+        self.setup()
+
+    def setup(self):
+        self.returncode = self.process.returncode
+        self.pid = self.process.pid
 
     @property
     def ok(self):

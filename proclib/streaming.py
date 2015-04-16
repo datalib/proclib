@@ -5,12 +5,8 @@ from .pipe import Pipe
 
 
 class StreamResponse(Response):
-    def __init__(self, command, process, stdout, stderr):
-        self.history = []
-        self.command = command
-        self.process = process
-        self.stdout = stdout
-        self.stderr = stderr
+    def setup(self):
+        pass
 
     @property
     def pid(self):
