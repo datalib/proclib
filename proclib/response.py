@@ -16,19 +16,16 @@ class Response(object):
     :param process: The `subprocess.Popen` object.
     :param stdout: Output from standard out.
     :param stderr: Output from standard error.
-    :param returncode: The return code.
-    :param pid: The PID of the process.
     """
 
-    def __init__(self, command, process, stdout,
-            stderr, returncode, pid):
+    def __init__(self, command, process, stdout, stderr):
         self.history = []
         self.command = command
         self.process = process
         self.stdout = stdout
         self.stderr = stderr
-        self.returncode = returncode
-        self.pid = pid
+        self.returncode = process.returncode
+        self.pid = process.pid
 
     @property
     def ok(self):

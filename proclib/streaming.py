@@ -11,7 +11,10 @@ class StreamResponse(Response):
         self.process = process
         self.stdout = stdout
         self.stderr = stderr
-        self.pid = self.process.pid
+
+    @property
+    def pid(self):
+        return self.process.pid
 
     def wait(self):
         self.process.wait()
@@ -40,11 +43,11 @@ class StreamResponse(Response):
 class StreamProcess(Process):
     def run(self):
         return StreamResponse(
-                command=self.command,
-                process=self.popen,
-                stdout=self.popen.stdout,
-                stderr=self.popen.stderr,
-                )
+            command=self.command,
+            process=self.popen,
+            stdout=self.popen.stdout,
+            stderr=self.popen.stderr,
+            )
 
 
 class StreamPipe(Pipe):

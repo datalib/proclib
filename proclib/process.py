@@ -45,14 +45,13 @@ class Process(object):
         object.
         """
         stdout, stderr = self.popen.communicate(self.data)
+        self.popen.wait()
         return Response(
-                command=self.command,
-                process=self.popen,
-                stdout=stdout,
-                stderr=stderr,
-                returncode=self.popen.wait(),
-                pid=self.popen.pid,
-                )
+            command=self.command,
+            process=self.popen,
+            stdout=stdout,
+            stderr=stderr,
+            )
 
     def __repr__(self):
         return '<Process [%s]>' % ' '.join(self.command)

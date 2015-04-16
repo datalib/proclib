@@ -17,8 +17,8 @@ __all__ = ('spawn',)
 
 
 def parse(cmds):
-    f = str_parse if isinstance(cmds, str) else list_parse
-    return list(f(cmds))
+    parser = str_parse if isinstance(cmds, str) else list_parse
+    return list(parser(cmds))
 
 
 def spawn(cmds, data=None, env=None, cwd=None):
@@ -42,10 +42,8 @@ def spawn(cmds, data=None, env=None, cwd=None):
 
 
 def stream(cmds, fileobj=PIPE, env=None, cwd=None):
-    pipe = StreamPipe(
-            commands=parse(cmds),
-            data=fileobj,
-            env=env,
-            cwd=cwd,
-            )
+    pipe = StreamPipe(commands=parse(cmds),
+                      data=fileobj,
+                      env=env,
+                      cwd=cwd)
     return pipe.run()

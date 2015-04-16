@@ -64,6 +64,6 @@ class Pipe(object):
         procs[0].data = self.data
 
         history = [p.run() for p in procs]
-        r = history.pop()
-        r.history = history
-        return r
+        res = history.pop()
+        res.history = history
+        return res
