@@ -2,7 +2,7 @@
     proclib.response
     ~~~~~~~~~~~~~~~~
 
-    Implements the Response object.
+    Implements the Response class.
 """
 
 
