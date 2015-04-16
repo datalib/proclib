@@ -57,11 +57,10 @@ class StreamResponse(Response):
     def __enter__(self):
         """
         When used as a context manager, the
-        StreamingResponse object yields the
-        response to the caller for convenience.
-        When the block exits, wait for the process
-        to exit and then close the stdout and
-        stderr file objects.
+        StreamingResponse object yields the response
+        to the caller for convenience. When the block
+        exits, wait for the process to exit and then
+        close the stdout and stderr file objects.
         """
         return self
 
@@ -73,10 +72,10 @@ class StreamResponse(Response):
 
 class StreamProcess(Process):
     """
-    Streaming variant of Process, the main
-    difference is that it doesn't ``communicate``
-    with the Popen instance as that will result
-    in reading the entire stdout at once.
+    Streaming variant of Process, the main difference
+    is that it doesn't ``communicate`` with the Popen
+    instance as that will result in reading the entire
+    stdout at once.
     """
 
     def run(self):
@@ -90,10 +89,9 @@ class StreamProcess(Process):
 
 class StreamPipe(Pipe):
     """
-    Streaming variant of Pipe that uses the
-    ``StreamProcess`` as the default Process
-    class to be used. A slightly different
-    signature is used:
+    Streaming variant of Pipe that uses the ``StreamProcess``
+    as the default Process class to be used. A slightly
+    different signature is used:
 
     :param commands: List of commands.
     :param fileobj: File-object with valid
