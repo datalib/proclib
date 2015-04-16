@@ -11,12 +11,14 @@ class StreamResponse(Response):
         self.process = process
         self.stdout = stdout
         self.stderr = stderr
+        self.pid = self.process.pid
+
+    def wait(self):
+        self.process.wait()
 
     @property
-    def pid(self):
-        if self.returncode is not None:
-            return self.process.pid
-        return None
+    def finished(self):
+        return self.returncode is not None
 
     @property
     def returncode(self):
