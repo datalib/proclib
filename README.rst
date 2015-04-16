@@ -25,24 +25,45 @@ Overview
 `proclib.api.spawn(cmd)`
     Given a string or list making up commands *cmd*, return
     a Response object which is the result of piping the commands,
-    i.e. they are run in *parallel*. The *data* parameter can be
+    i.e. they are run in *parallel*. The ``data`` parameter can be
     used to configure the data passed in to the initial process.
     Usage example::
 
         >>> from proclib.api import spawn
-        >>> proc = spawn('cat | grep at', data='at\n')
-        >>> proc.ok
+        >>> r = spawn('cat | grep at', data='at\n')
+        >>> r.ok
         True
-        >>> proc.history
+        >>> r.history
         [<Response [cat]>]
+
+`proclib.api.stream(cmd)`
+    Given a string or list of commands *cmd*, returns the
+    streaming variant of a Response object, StreamResponse
+    which encapsulates a long running, possibly unfinished
+    process. The ``fileobj`` parameter can be used to supply
+    a file as the stdin. Usage example::
+
+        >>> from proclib.api import stream
+        >>> r = stream('yes')
+        >>> for item in r.stdout: print(item)
+        y
+        y
+        ...
+
+    Note that the ``stream`` function does not accept a
+    ``hooks`` parameter because it is not possible to
+    determine when a process is going to finish (at least
+    without lots of hackery) and thus callbacks may be
+    called at weird times.
+
 
 Extending
 ---------
 
 Extending the library can be done via hooking into the library.
-You can provide ``hooks`` parameter which contains a mapping of
-event-names to lists of callbacks. Currently only two hooks
-are supported:
+You can provide ``hooks`` parameter to the ``spawn`` function
+which contains a mapping of event-names to lists of callbacks.
+Currently only two hooks are supported:
 
 - ``success`` - Called when the process ran successfully,
   i.e. the return code is 0.

@@ -7,11 +7,18 @@
 """
 
 
-from .pipe import Pipe
+from subprocess import PIPE
 from .helpers import list_parse, str_parse
+from .pipe import Pipe
+from .streaming import StreamPipe
 
 
 __all__ = ('spawn',)
+
+
+def parse(cmds):
+    f = str_parse if isinstance(cmds, str) else list_parse
+    return list(f(cmds))
 
 
 def spawn(cmds, data=None, hooks=None, env=None, cwd=None):
@@ -28,10 +35,19 @@ def spawn(cmds, data=None, hooks=None, env=None, cwd=None):
     :param cwd: Optionally set the execution directory
         of the commands ran.
     """
-    func = str_parse if isinstance(cmds, str) else list_parse
-    pipe = Pipe(commands=list(func(cmds)),
+    pipe = Pipe(commands=parse(cmds),
                 hooks=hooks,
                 data=data,
                 env=env,
                 cwd=cwd)
+    return pipe.run()
+
+
+def stream(cmds, fileobj=PIPE, env=None, cwd=None):
+    pipe = StreamPipe(
+            commands=parse(cmds),
+            data=fileobj,
+            env=env,
+            cwd=cwd,
+            )
     return pipe.run()

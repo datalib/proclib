@@ -28,6 +28,7 @@ class Process(object):
     """
 
     defaults = dict(universal_newlines=True,
+                    close_fds=True,
                     stdout=PIPE,
                     stderr=PIPE,
                     stdin=PIPE)
