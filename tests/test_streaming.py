@@ -19,7 +19,7 @@ def test_response_returncode(response):
 
 def test_response_contextmanager(response):
     with response:
-        assert response.stdout.read() == 'm\n'
+        assert str(response.stdout.read()) == 'm\n'
         assert not response.stderr.read()
     assert response.stdout.closed
     assert response.stderr.closed
@@ -46,7 +46,7 @@ def test_pipe_run(pipe):
     r = pipe.run()
     with r:
         assert r.command[0] == 'head'
-        assert r.stdout.read() == 'y\ny\ny\ny\ny\n'
+        assert str(r.stdout.read()) == 'y\ny\ny\ny\ny\n'
 
     [p.terminate() for p in r.history]
     assert r.returncode == 0
