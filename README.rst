@@ -49,31 +49,3 @@ Overview
         y
         y
         ...
-
-    Note that the ``stream`` function does not accept a
-    ``hooks`` parameter because it is not possible to
-    determine when a process is going to finish (at least
-    without lots of hackery) and thus callbacks may be
-    called at weird times.
-
-
-Extending
----------
-
-Extending the library can be done via hooking into the library.
-You can provide ``hooks`` parameter to the ``spawn`` function
-which contains a mapping of event-names to lists of callbacks.
-Currently only two hooks are supported:
-
-- ``success`` - Called when the process ran successfully,
-  i.e. the return code is 0.
-- ``error`` - Called otherwise.
-
-The provided callbacks are called with the Process object, a
-simple wrapper that prepares and runs a Popen object. Example
-of using the hooking API::
-
-    spawn(command, hooks={
-        'success': [callback1, callback2],
-        'error': [callback3],
-    })

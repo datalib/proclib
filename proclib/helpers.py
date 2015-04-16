@@ -1,13 +1,6 @@
 import shlex
 
 
-def dispatch_hook(hooks, hook, data):
-    if hook in hooks:
-        for item in hooks[hook]:
-            item(data)
-    return data
-
-
 def str_parse(cmds):
     buff = []
     for item in shlex.split(cmds):

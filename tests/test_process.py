@@ -7,32 +7,6 @@ def proc():
     return Process('cat', data='at\n')
 
 
-def test_dispatch_runs_hook(proc):
-    ctx = []
-    proc.hooks['ev'] = [ctx.append]
-    proc.dispatch('ev')
-
-    assert ctx == [proc]
-
-
-def test_popen_context_runs_error_hook(proc):
-    ctx = []
-    proc.hooks['error'] = [ctx.append]
-    with proc.popen_context():
-        proc.popen.returncode = 1
-
-    assert ctx == [proc]
-
-
-def test_popen_context_runs_success_hook(proc):
-    ctx = []
-    proc.hooks['success'] = [ctx.append]
-    with proc.popen_context():
-        proc.popen.returncode = 0
-
-    assert ctx == [proc]
-
-
 def test_run_calls_command(proc):
     r = proc.run()
     assert r.ok

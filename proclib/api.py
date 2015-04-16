@@ -21,7 +21,7 @@ def parse(cmds):
     return list(f(cmds))
 
 
-def spawn(cmds, data=None, hooks=None, env=None, cwd=None):
+def spawn(cmds, data=None, env=None, cwd=None):
     """
     Spawn a command/pipeline *cmds* where *cmds*
     can be a string, list of strings, or list of
@@ -29,14 +29,12 @@ def spawn(cmds, data=None, hooks=None, env=None, cwd=None):
 
     :param cmds: List/String of commands.
     :param data: Data to be piped in.
-    :param hooks: Hooks to be passed in.
     :param env: Optionally override the environment
         variables of all the commands to be ran.
     :param cwd: Optionally set the execution directory
         of the commands ran.
     """
     pipe = Pipe(commands=parse(cmds),
-                hooks=hooks,
                 data=data,
                 env=env,
                 cwd=cwd)

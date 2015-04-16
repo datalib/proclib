@@ -16,7 +16,6 @@ class Pipe(object):
     execution and piping of multiple Processes.
 
     :param commands: A list of commands.
-    :param hooks: Hooks to be passed to every process.
     :param data: Data to be piped in to the first process.
     :param opts: Extra options to be passed to every
         spawned process.
@@ -24,9 +23,8 @@ class Pipe(object):
 
     process_class = Process
 
-    def __init__(self, commands, hooks=None, data=None, **opts):
+    def __init__(self, commands, data=None, **opts):
         self.commands = commands
-        self.hooks = hooks or {}
         self.data = data
         self.opts = opts
 
@@ -47,7 +45,6 @@ class Pipe(object):
         for cmd in self.order():
             proc = self.process_class(
                 command=cmd,
-                hooks=self.hooks,
                 stdout=previous_stdin,
                 **self.opts
                 )
