@@ -30,11 +30,26 @@ Overview
     Usage example::
 
         >>> from proclib.api import spawn
-        >>> proc = spawn('cat | grep at', data='at\n')
-        >>> proc.ok
+        >>> r = spawn('cat | grep at', data='at\n')
+        >>> r.ok
         True
-        >>> proc.history
+        >>> r.history
         [<Response [cat]>]
+
+`proclib.api.stream(cmd)`
+    Given a string or list of commands *cmd*, returns the
+    streaming variant of a Response object, StreamResponse
+    which encapsulates a long running, possibly unfinished
+    process. The *fileobj* parameter can be used to supply
+    a file as the stdin. Usage example::
+
+        >>> from proclib.api import stream
+        >>> r = stream('yes')
+        >>> for item in r.stdout: print(item)
+        y
+        y
+        ...
+
 
 Extending
 ---------
