@@ -61,7 +61,7 @@ class Pipe(object):
         previous_stdin = PIPE
         procs = []
         for cmd in self.order():
-            proc = self.make_process(cmd, previous_stdin)
+            proc = self.make_process(cmd, stdout=previous_stdin)
             previous_stdin = proc.popen.stdin
             procs.append(proc)
         procs.reverse()

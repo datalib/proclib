@@ -22,8 +22,7 @@ def spawn(cmds, data=None, hooks=None, env=None, cwd=None):
 
     :param cmds: List/String of commands.
     :param data: Data to be piped in.
-    :param hooks: A mapping of event-names to lists
-        of callbacks to be passed in.
+    :param hooks: Hooks to be passed in.
     :param env: Optionally override the environment
         variables of all the commands to be ran.
     :param cwd: Optionally set the execution directory
