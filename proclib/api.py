@@ -49,6 +49,19 @@ def spawn(cmds, data=None, env=None, cwd=None):
 
 
 def stream(cmds, fileobj=PIPE, env=None, cwd=None):
+    """
+    Given a string or list of commands *cmd*,
+    returns the streaming variant of a Response
+    object, which encapsulates a long running,
+    possibly unfinished process. The *fileobj*
+    parameter can be used to supply a file as
+    the stdin.
+
+    :param cmds: List/String of commands.
+    :param fileobj: File object to be used as stdin.
+    :param env: Environment variables.
+    :param cwd: Execution directory.
+    """
     pipe = StreamPipe(commands=parse(cmds),
                       fileobj=fileobj,
                       env=env,
