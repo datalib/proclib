@@ -13,6 +13,7 @@ def response(request):
 
 
 def test_response_returncode(response):
+    response.wait()
     assert response.ok
 
 
