@@ -89,3 +89,6 @@ class Response(object):
         """
         if not self.finished:
             self.process.terminate()
+
+    def __repr__(self):
+        return '<Response [%s]>' % self.command[0]
