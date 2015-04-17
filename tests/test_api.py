@@ -1,4 +1,8 @@
 import pytest
+try:
+    from cStringIO import StringIO
+except:
+    from io import StringIO
 from proclib.api import spawn
 
 
@@ -15,6 +19,7 @@ def command(request):
     lambda: iter(['at\n'] * 2),
     lambda: 'at\nat\n',
     lambda: ['at\nat\n'],
+    lambda: StringIO('at\nat\n'),
 ])
 def data(request):
     return request.param()
