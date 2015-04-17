@@ -1,7 +1,22 @@
+"""
+    proclib.helpers
+    ~~~~~~~~~~~~~~~
+
+    Helper utility functions.
+"""
+
+
 import shlex
 
 
 def str_parse(cmds):
+    """
+    Given a string of commands *cmds* yield the
+    command in chunks, separated by the pipe
+    operator '|'.
+
+    :param cmds: String of commands.
+    """
     buff = []
     for item in shlex.split(cmds):
         if item == '|':
@@ -15,6 +30,13 @@ def str_parse(cmds):
 
 
 def list_parse(cmds):
+    """
+    Given a list of commands, if they are a
+    string then parse them, else yield them
+    as if they were already correctly formatted.
+
+    :param cmds: List of commands.
+    """
     for item in cmds:
         if isinstance(item, str):
             for item in str_parse(item):
@@ -24,6 +46,15 @@ def list_parse(cmds):
 
 
 class cached_property(object):
+    """
+    Property that is computed only once during
+    the lifetime of an object, i.e. the second
+    time the attribute is looked up there is
+    zero cost overhead.
+
+    :param func: Function to wrap over.
+    """
+
     def __init__(self, func):
         self.func = func
         self.__name__ = func.__name__
