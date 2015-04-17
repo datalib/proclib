@@ -21,3 +21,17 @@ def list_parse(cmds):
                 yield item
             continue
         yield list(item)
+
+
+class cached_property(object):
+    def __init__(self, func):
+        self.__doc__ = func.__doc__
+        self.getter = func
+        self.attr = func.__name__
+
+    def __get__(self, obj, objtype=None):
+        if obj is not None:
+            value = self.getter(obj)
+            self.getter = lambda _: value
+            return value
+        return self

@@ -1,49 +1,34 @@
-"""
-    proclib.response
-    ~~~~~~~~~~~~~~~~
-
-    Implements the Response class.
-"""
+from .helpers import cached_property
 
 
 class Response(object):
-    """
-    A Response object represents the result of running
-    a process. The parameters supplied are stored and
-    available as attributes as well.
-
-    :param command: The command ran.
-    :param process: The `subprocess.Popen` object.
-    :param stdout: Output from standard out.
-    :param stderr: Output from standard error.
-    """
-
-    def __init__(self, command, process, stdout, stderr):
+    def __init__(self, command, process):
         self.history = []
         self.command = command
         self.process = process
-        self.stdout = stdout
-        self.stderr = stderr
-        self.setup()
 
-    def setup(self):
-        """
-        Set up additional attributes of the Response
-        object. By default this sets up ``returncode``
-        and ``pid``.
-        """
-        self.returncode = self.process.returncode
-        self.pid = self.process.pid
+        self.pid = process.pid
+        self.stdout = process.stdout
+        self.stderr = process.stderr
+
+    @cached_property
+    def out(self):
+        with self.stdout:
+            return self.stdout.read()
+
+    @cached_property
+    def err(self):
+        with self.stderr:
+            return self.stderr.read()
 
     @property
-    def ok(self):
-        """
-        Returns a boolean depending on whether the
-        `returncode` attribute equals zero.
-        """
-        return self.returncode == 0
+    def status_code(self):
+        return self.process.poll()
 
-    def __repr__(self):
-        if not self.command:
-            return '<Response>'
-        return '<Response [%s]>' % self.command[0]
+    @property
+    def finished(self):
+        return self.status_code is not None
+
+    def close(self):
+        self.stdout.close()
+        self.stderr.close()
