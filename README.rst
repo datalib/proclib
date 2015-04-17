@@ -31,21 +31,20 @@ Overview
 
         >>> from proclib.api import spawn
         >>> r = spawn('cat | grep at', data='at\n')
+        >>> r.wait()
         >>> r.ok
         True
         >>> r.history
         [<Response [cat]>]
 
-`proclib.api.stream(cmd)`
-    Given a string or list of commands *cmd*, returns the
-    streaming variant of a Response object, StreamResponse
-    which encapsulates a long running, possibly unfinished
-    process. The ``fileobj`` parameter can be used to supply
-    a file as the stdin. Usage example::
+    Streaming support is built-in- that is that the stdout of
+    any process can be streamed lazily instead of read and stored
+    in memory all in one go. Also, any kind of iterable can be
+    piped to the process::
 
-        >>> from proclib.api import stream
-        >>> r = stream('cat', fileobj=open('lorem.txt'))
-        >>> for item in r.stdout: print(item)
-        Lorem ipsum dolor sit amet, cras rutrum a, vivamus
-        placerat amet vehicula rhoncus interdum, semper in
-        ...
+        def gen():
+            yield 'hi\n'
+            yield 'ho\n'
+
+        r = spawn('cat', data=gen())
+        assert r.out.split() == ['hi', 'ho']
