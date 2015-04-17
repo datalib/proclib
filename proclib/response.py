@@ -39,3 +39,7 @@ class Response(object):
 
     def wait(self):
         self.process.wait()
+
+    def terminate(self):
+        if not self.finished:
+            self.process.terminate()
