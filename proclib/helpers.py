@@ -25,13 +25,12 @@ def list_parse(cmds):
 
 class cached_property(object):
     def __init__(self, func):
+        self.func = func
+        self.__name__ = func.__name__
         self.__doc__ = func.__doc__
-        self.getter = func
-        self.attr = func.__name__
 
     def __get__(self, obj, objtype=None):
-        if obj is not None:
-            value = self.getter(obj)
-            self.getter = lambda _: value
-            return value
-        return self
+        if obj is None:
+            return self
+        res = obj.__dict__[self.__name__] = self.func(obj)
+        return res

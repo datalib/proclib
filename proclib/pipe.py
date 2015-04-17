@@ -5,7 +5,7 @@ from .process import Process
 class Pipe(object):
     process_class = Process
 
-    def __init__(self, commands, data=None, **opts):
+    def __init__(self, commands, data=(), **opts):
         self.commands = commands
         self.data = data
         self.opts = opts
@@ -28,4 +28,6 @@ class Pipe(object):
         history = [p.run() for p in procs]
         r = history.pop()
         r.history = history
+        for item in r.history:
+            item.stdout.close()
         return r
