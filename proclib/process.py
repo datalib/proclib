@@ -5,7 +5,7 @@ from .response import Response
 class Process(object):
     response_cls = Response
     defaults = dict(universal_newlines=True,
-                    close_fds=False,
+                    close_fds=True,
                     stdout=PIPE,
                     stderr=PIPE,
                     stdin=PIPE)
