@@ -32,3 +32,10 @@ class Response(object):
     def close(self):
         self.stdout.close()
         self.stderr.close()
+
+    @property
+    def ok(self):
+        return self.status_code == 0
+
+    def wait(self):
+        self.process.wait()

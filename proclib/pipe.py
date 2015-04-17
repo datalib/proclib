@@ -11,14 +11,14 @@ class Pipe(object):
         self.opts = opts
 
     def spawn_procs(self):
-        stdin = PIPE
+        stdout = PIPE
         for item in self.commands:
             proc = self.process_class(
                 command=item,
-                stdout=stdin,
+                stdin=stdout,
                 **self.opts
                 )
-            stdin = proc.proc.stdout
+            stdout = proc.process.stdout
             yield proc
 
     def run(self):

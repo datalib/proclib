@@ -15,19 +15,18 @@ class Process(object):
         conf.update(opts)
 
         self.command = command
-        self.proc = Popen(args=command, **conf)
+        self.process = Popen(args=command, **conf)
 
     def pipe(self, lines):
-        stdin = self.proc.stdin
+        stdin = self.process.stdin
         if stdin:
             for line in lines:
                 stdin.write(line)
             stdin.flush()
             stdin.close()
 
-
     def run(self):
         return self.response_cls(
             self.command,
-            self.proc,
+            self.process,
             )
