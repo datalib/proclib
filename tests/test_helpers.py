@@ -1,5 +1,5 @@
 from pytest import fixture
-from proclib.helpers import str_parse, list_parse
+from proclib.helpers import str_parse, list_parse, cached_property
 
 
 @fixture
@@ -22,3 +22,18 @@ def test_str_parse(expected):
 
 def test_list_parse(cmd, expected):
     assert list(list_parse(cmd)) == expected
+
+
+def test_cached_property():
+    class Obj(object):
+        ctx = []
+
+        @cached_property
+        def name(self):
+            self.ctx.append(1)
+            return self
+
+    obj = Obj()
+    assert obj.name is obj
+    assert obj.name is obj
+    assert obj.ctx == [1]

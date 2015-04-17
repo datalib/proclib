@@ -1,25 +1,28 @@
-from pytest import mark
-from proclib.api import spawn, stream
+import pytest
+from proclib.api import spawn
 
 
-@mark.parametrize('cmd', (
-    'echo hello | cat',
-    [['echo', 'hello'], 'cat'],
-    ['echo hello', 'cat'],
-    ['echo hello | cat'],
-))
-def test_spawn_parses_all_argtypes(cmd):
-    assert spawn(cmd).stdout == 'hello\n'
+@pytest.fixture(params=[
+    ['cat', ['grep', 'at']],
+    ['cat | grep at'],
+    'cat | grep at',
+])
+def command(request):
+    return request.param
 
 
+@pytest.fixture(params=[
+    lambda: iter(['at\n'] * 2),
+    lambda: 'at\nat\n',
+    lambda: ['at\nat\n'],
+])
+def data(request):
+    return request.param()
 
-def test_stream_with_fileobj(tmpdir):
-    u = tmpdir.join('filename.txt')
-    u.write('\n'.join(['ho'] * 10))
 
-    with u.open() as fp:
-        with stream('cat | head -n 2', fileobj=fp) as res:
-            res.wait()
-            assert res.stdout.read() == 'ho\nho\n'
-            assert res.finished
-            assert res.ok
+def test_spawn(command, data):
+    r = spawn(command, data=data)
+    r.wait()
+
+    assert r.out == 'at\nat\n'
+    assert r.ok

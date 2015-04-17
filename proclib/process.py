@@ -5,7 +5,6 @@
     Implements the Process class.
 """
 
-
 from subprocess import Popen, PIPE
 from .response import Response
 
@@ -14,44 +13,50 @@ class Process(object):
     """
     A Process object is a wrapper around a regular
     `subprocess.Popen` instance that knows how to
-    call and manipulate it with the correct
-    arguments.
+    call it with the correct arguments.
 
     :param command: The command.
-    :param data: Data to be piped in to the process.
     :param opts: Keyword argument of additional
         options to be pased to the `subprocess.Popen`
         constructor.
     """
 
+    response_cls = Response
     defaults = dict(universal_newlines=True,
                     close_fds=True,
                     stdout=PIPE,
                     stderr=PIPE,
                     stdin=PIPE)
 
-    def __init__(self, command, data=None, **opts):
+    def __init__(self, command, **opts):
         conf = self.defaults.copy()
         conf.update(opts)
 
-        self.popen = Popen(args=command, **conf)
         self.command = command
-        self.data = data
+        self.process = Popen(args=command, **conf)
+
+    def pipe(self, lines):
+        """
+        Given a Process with a valid stdin (not a
+        file-handle that is not PIPE), write *lines*
+        of data to the process where *lines* can
+        be any iterable.
+
+        :param lines: Iterable of data to be piped
+            in to the process.
+        """
+        stdin = self.process.stdin
+        for line in lines:
+            stdin.write(line)
+        stdin.flush()
+        stdin.close()
 
     def run(self):
         """
-        Communicates with the Popen object and then
-        waits for it to exit. Returns a ``Response``
+        Wraps the Popen instance in a ``Response``
         object.
         """
-        stdout, stderr = self.popen.communicate(self.data)
-        self.popen.wait()
-        return Response(
-            command=self.command,
-            process=self.popen,
-            stdout=stdout,
-            stderr=stderr,
+        return self.response_cls(
+            self.command,
+            self.process,
             )
-
-    def __repr__(self):
-        return '<Process [%s]>' % ' '.join(self.command)

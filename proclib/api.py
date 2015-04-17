@@ -1,19 +1,12 @@
 """
     proclib.api
     ~~~~~~~~~~~
-
     Module that exposes the public, easy-to-use
     functional wrappers.
 """
 
-
-from subprocess import PIPE
-from .helpers import list_parse, str_parse
+from .helpers import str_parse, list_parse
 from .pipe import Pipe
-from .streaming import StreamPipe
-
-
-__all__ = ('spawn', 'stream')
 
 
 def parse(cmds):
@@ -21,49 +14,32 @@ def parse(cmds):
     Given a string or list of lists/strings *cmds*,
     determine and use the correct parser to use and
     return the results as a list.
-
     :param cmds: List/String of commands.
     """
     parser = str_parse if isinstance(cmds, str) else list_parse
     return list(parser(cmds))
 
 
-def spawn(cmds, data=None, env=None, cwd=None):
+def spawn(cmd, data=None, env=None, cwd=None):
     """
-    Spawn a command/pipeline *cmds* where *cmds*
-    can be a string, list of strings, or list of
-    lists.
+    Given a string or list making up commands *cmd*,
+    return a response object which is the result of
+    piping the commands in parallel. Optionally, pass
+    in some *data* in the form of an iterable, file
+    object, or string to the first process.
 
-    :param cmds: List/String of commands.
-    :param data: Data to be piped in.
-    :param env: Optionally override the environment
-        variables of all the commands to be ran.
-    :param cwd: Optionally set the execution directory
-        of the commands ran.
+    :param cmd: String/List of commands.
+    :param data: Data to be passed to the first command.
+    :param env: Override environment variables.
+    :param cwd: Override working directory.
     """
-    pipe = Pipe(commands=parse(cmds),
-                data=data,
-                env=env,
-                cwd=cwd)
-    return pipe.run()
+    if isinstance(data, str):
+        data = [data]
 
-
-def stream(cmds, fileobj=PIPE, env=None, cwd=None):
-    """
-    Given a string or list of commands *cmd*,
-    returns the streaming variant of a Response
-    object, which encapsulates a long running,
-    possibly unfinished process. The *fileobj*
-    parameter can be used to supply a file as
-    the stdin.
-
-    :param cmds: List/String of commands.
-    :param fileobj: File object to be used as stdin.
-    :param env: Environment variables.
-    :param cwd: Execution directory.
-    """
-    pipe = StreamPipe(commands=parse(cmds),
-                      fileobj=fileobj,
-                      env=env,
-                      cwd=cwd)
+    pipe = Pipe(
+        commands=parse(cmd),
+        data=data,
+        env=env,
+        cwd=cwd,
+        )
     return pipe.run()
