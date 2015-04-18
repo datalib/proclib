@@ -57,6 +57,8 @@ class Pipe(object):
         history = [p.run() for p in procs]
         r = history.pop()
         r.history = history
-        for item in r.history:
-            item.stdout.close()
+
+        for res in r.history:
+            res.stdout.close()
+
         return r
