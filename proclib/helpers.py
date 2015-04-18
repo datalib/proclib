@@ -18,7 +18,12 @@ TO_RESTORE = tuple(
 
 def restore_signals(signals=TO_RESTORE):
     """
-    Function for restoring the signals
+    Restores signals before the process is
+    executed so that they can be terminated
+    with SIGPIPE.
+
+    :param signals: Defaults to SIGPIPE,
+        SIGXFZ, and SIGXFSZ (if available).
     """
     for sig in signals:
         signal.signal(sig, signal.SIG_DFL)
