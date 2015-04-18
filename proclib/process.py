@@ -47,11 +47,10 @@ class Process(object):
         :param lines: Iterable of data to be piped
             in to the process.
         """
-        stdin = self.process.stdin
-        for line in lines:
-            stdin.write(line)
-        stdin.flush()
-        stdin.close()
+        with self.process.stdin as stdin:
+            for line in lines:
+                stdin.write(line)
+            stdin.flush()
 
     def run(self):
         """
