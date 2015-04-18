@@ -20,7 +20,7 @@ def parse(cmds):
     return list(parser(cmds))
 
 
-def spawn(cmd, data=None, env=None, cwd=None):
+def spawn(cmd, data=(), env=None, cwd=None):
     """
     Given a string or list making up commands *cmd*,
     return a response object which is the result of

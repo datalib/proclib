@@ -25,7 +25,15 @@ def data(request):
     return request.param()
 
 
-def test_spawn(command, data):
+def test_spawn_no_data():
+    r = spawn('echo m')
+    r.wait()
+
+    assert r.out.strip() == 'm'
+    assert r.ok
+
+
+def test_spawn_with_data(command, data):
     r = spawn(command, data=data)
     r.wait()
 
