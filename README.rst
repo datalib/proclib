@@ -1,6 +1,9 @@
 Proclib: pythonic processes
 ===========================
 
+.. image:: https://img.shields.io/pypi/v/proclib.svg
+    :target: https://pypi.python.org/pypi/proclib
+
 .. image:: https://travis-ci.org/datalib/proclib.svg?branch=master
     :target: https://travis-ci.org/datalib/proclib
 
