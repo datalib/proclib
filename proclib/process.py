@@ -7,6 +7,7 @@
 
 from subprocess import Popen, PIPE
 from .response import Response
+from .helpers import restore_signals
 
 
 class Process(object):
@@ -21,9 +22,10 @@ class Process(object):
         constructor.
     """
 
-    response_cls = Response
+    response_class = Response
     defaults = dict(universal_newlines=True,
                     close_fds=True,
+                    preexec_fn=restore_signals,
                     stdout=PIPE,
                     stderr=PIPE,
                     stdin=PIPE)
@@ -56,7 +58,7 @@ class Process(object):
         Wraps the Popen instance in a ``Response``
         object.
         """
-        return self.response_cls(
+        return self.response_class(
             self.command,
             self.process,
             )

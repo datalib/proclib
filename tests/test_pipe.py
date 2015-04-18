@@ -24,3 +24,12 @@ def test_run_pipes_data(pipe):
     assert r.ok
     assert r.finished
     assert r.out == 'at\n'
+
+
+def test_sigpipe_was_used():
+    r = Pipe([['yes'], ['head', '-n', '2']]).run()
+    r.wait()
+    assert len(r.out.split()) == 2
+    assert r.ok
+    r.history[0].wait()
+    assert r.history[0].status_code == -13

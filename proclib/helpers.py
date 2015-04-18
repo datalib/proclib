@@ -7,6 +7,21 @@
 
 
 import shlex
+import signal
+
+
+TO_RESTORE = tuple(
+    getattr(signal, sig) for sig in ('SIGPIPE', 'SIGXFZ', 'SIGXFSZ')
+    if hasattr(signal, sig)
+    )
+
+
+def restore_signals(signals=TO_RESTORE):
+    """
+    Function for restoring the signals
+    """
+    for sig in signals:
+        signal.signal(sig, signal.SIG_DFL)
 
 
 def str_parse(cmds):
