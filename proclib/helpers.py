@@ -39,14 +39,13 @@ def str_parse(cmds):
     :param cmds: String of commands.
     """
     buff = []
-    splat = shlex.split(cmds)
-    splat.append('|')
-    for item in splat:
+    for item in shlex.split(cmds):
         if item == '|':
             yield buff
             buff = []
             continue
         buff.append(item)
+    yield buff
 
 
 def list_parse(cmds):
