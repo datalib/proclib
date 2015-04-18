@@ -49,7 +49,8 @@ class Response(object):
     @property
     def status_code(self):
         """
-        Returns the exit code of the process.
+        Returns the exit code of the process, None
+        if the process hasn't completed.
         """
         return self.process.poll()
 
@@ -57,9 +58,11 @@ class Response(object):
     def finished(self):
         """
         Returns a boolean stating if the process has
-        completed or not.
+        completed or not. Internally this calls
+        `status_code` to determine the exit code
+        of the process.
         """
-        return self.process.poll() is not None
+        return self.status_code is not None
 
     def close(self):
         """
