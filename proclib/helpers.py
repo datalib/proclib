@@ -23,8 +23,9 @@ def restore_signals(signals=TO_RESTORE):
     with SIGPIPE.
 
     :param signals: Optimization detail
-        that defaults to SIGPIPE, SIGXFZ,
-        and SIGXFSZ (if available).
+        that defaults to integers corresponding
+        to SIGPIPE, SIGXFZ, and SIGXFSZ (if
+        they are available).
     """
     for sig in signals:
         signal.signal(sig, signal.SIG_DFL)
