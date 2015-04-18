@@ -92,3 +92,9 @@ class Response(object):
 
     def __repr__(self):
         return '<Response [%s]>' % self.command[0]
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *_):
+        self.close()

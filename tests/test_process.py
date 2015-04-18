@@ -28,3 +28,14 @@ def test_terminate_cat(proc):
     assert r.finished
     assert r.status_code == -15
     assert not r.ok
+
+
+def test_context_manager(proc):
+    proc.pipe(['data'])
+    with proc.run() as r:
+        assert r.stdout.read() == 'data'
+        assert r.stderr.read() == ''
+
+    assert r.stdout.closed
+    assert r.stderr.closed
+    r.wait()
