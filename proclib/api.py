@@ -8,6 +8,8 @@
 from .helpers import str_parse, list_parse
 from .pipe import Pipe
 
+__all__ = ('spawn',)
+
 
 def parse(cmds):
     """
