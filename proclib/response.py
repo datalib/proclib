@@ -97,6 +97,11 @@ class Response(object):
         return '<Response [%s]>' % self.command[0]
 
     def __enter__(self):
+        """
+        Similar to a file object, will return the
+        Response object and then will safely close
+        all open file handles when it exits.
+        """
         return self
 
     def __exit__(self, *_):
