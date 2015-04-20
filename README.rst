@@ -1,5 +1,5 @@
-Proclib: pythonic processes
-===========================
+|logo| Proclib: pythonic processes
+==================================
 
 .. image:: https://travis-ci.org/datalib/proclib.svg?branch=master
     :target: https://travis-ci.org/datalib/proclib
