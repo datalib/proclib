@@ -1,16 +1,8 @@
-Proclib: pythonic processes
-===========================
+|logo| Proclib: pythonic processes
+==================================
 
 .. image:: https://travis-ci.org/datalib/proclib.svg?branch=master
     :target: https://travis-ci.org/datalib/proclib
-
-::
-
-                          ___ __
-       ___  _______  ____/ (_) /
-      / _ \/ __/ _ \/ __/ / / _ \
-     / .__/_/  \___/\__/_/_/_.__/
-    /_/
 
 
 Proclib is a high level wrapper/abstraction around the standard
@@ -48,3 +40,5 @@ Overview
 
         r = spawn('cat', data=gen())
         assert r.out.split() == ['hi', 'ho']
+
+.. |logo| image:: https://raw.githubusercontent.com/datalib/proclib/master/media/logo-small.png
