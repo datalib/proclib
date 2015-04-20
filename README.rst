@@ -4,13 +4,8 @@ Proclib: pythonic processes
 .. image:: https://travis-ci.org/datalib/proclib.svg?branch=master
     :target: https://travis-ci.org/datalib/proclib
 
-::
-
-                          ___ __
-       ___  _______  ____/ (_) /
-      / _ \/ __/ _ \/ __/ / / _ \
-     / .__/_/  \___/\__/_/_/_.__/
-    /_/
+.. image:: https://raw.githubusercontent.com/datalib/proclib/master/media/logo-small.png
+    :align: left
 
 
 Proclib is a high level wrapper/abstraction around the standard
