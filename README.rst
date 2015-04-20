@@ -4,9 +4,6 @@ Proclib: pythonic processes
 .. image:: https://travis-ci.org/datalib/proclib.svg?branch=master
     :target: https://travis-ci.org/datalib/proclib
 
-.. image:: https://raw.githubusercontent.com/datalib/proclib/master/media/logo-small.png
-    :align: left
-
 
 Proclib is a high level wrapper/abstraction around the standard
 library subprocess module, written in Python, with proper piping
@@ -43,3 +40,5 @@ Overview
 
         r = spawn('cat', data=gen())
         assert r.out.split() == ['hi', 'ho']
+
+.. |logo| image:: https://raw.githubusercontent.com/datalib/proclib/master/media/logo-small.png
