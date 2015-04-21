@@ -114,6 +114,6 @@ class Response(object):
         and the default action of) the signal that
         killed the process.
         """
-        r = self.status_code
-        if r and r < 0:
-            return explain(abs(r))
+        status = self.status_code
+        if status and status < 0:
+            return explain(abs(status))
