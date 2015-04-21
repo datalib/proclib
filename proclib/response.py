@@ -6,6 +6,7 @@
 
 
 from .helpers import cached_property
+from signalsdb.api import explain
 
 
 class Response(object):
@@ -106,3 +107,13 @@ class Response(object):
 
     def __exit__(self, *_):
         self.close()
+
+    def explain(self):
+        """
+        Explains (provides the name, the description,
+        and the default action of) the signal that
+        killed the process.
+        """
+        status = self.status_code
+        if status and status < 0:
+            return explain(abs(status))
