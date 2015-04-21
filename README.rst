@@ -20,12 +20,15 @@ Overview
     Usage example::
 
         >>> from proclib.api import spawn
-        >>> r = spawn('cat | grep at', data='at\n')
-        >>> r.wait()
-        >>> r.ok
-        True
-        >>> r.history
-        [<Response [cat]>]
+        >>> r = spawn('yes | head')
+        >>> r.stdout.read()
+        'y\ny\ny\ny\ny\ny\ny\ny\ny\ny\n'
+        >>> r.close()
+        >>> r.history[0].explain()
+        {'action': 'kill',
+         'description': 'write on a pipe with no readers',
+         'id': 13,
+         'signal': 'SIGPIPE'}
 
     Streaming support is built-in- that is that the stdout of
     any process can be streamed lazily instead of read and stored
