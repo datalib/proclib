@@ -15,7 +15,9 @@ setup(
     url='https://github.com/datalib/proclib',
 
     packages=['proclib'],
-    install_requires=[],
+    install_requires=[
+        'signalsdb==0.1',
+    ],
     extras_require={
         'test': ['pytest'],
     },
