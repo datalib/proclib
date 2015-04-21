@@ -6,6 +6,7 @@
 
 
 from .helpers import cached_property
+from signalsdb.api import explain
 
 
 class Response(object):
@@ -97,7 +98,22 @@ class Response(object):
         return '<Response [%s]>' % self.command[0]
 
     def __enter__(self):
+        """
+        Similar to a file object, will return the
+        Response object and then will safely close
+        all open file handles when it exits.
+        """
         return self
 
     def __exit__(self, *_):
         self.close()
+
+    def explain(self):
+        """
+        Explains (provides the name, the description,
+        and the default action of) the signal that
+        killed the process.
+        """
+        status = self.status_code
+        if status and status < 0:
+            return explain(abs(status))
