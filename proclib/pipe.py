@@ -9,6 +9,17 @@ from subprocess import PIPE
 from .process import Process
 
 
+def make_response(procs):
+    history = [p.run() for p in procs]
+    r = history.pop()
+    r.history = history
+
+    for res in r.history:
+        res.stdout.close()
+
+    return r
+
+
 class Pipe(object):
     """
     A Pipe object represents and starts the parallel
@@ -52,12 +63,4 @@ class Pipe(object):
         """
         procs = list(self.spawn_procs())
         procs[0].pipe(self.data)
-
-        history = [p.run() for p in procs]
-        r = history.pop()
-        r.history = history
-
-        for res in r.history:
-            res.stdout.close()
-
-        return r
+        return make_response(procs)
