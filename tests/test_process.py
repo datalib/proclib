@@ -26,7 +26,7 @@ def test_terminate_cat(proc):
     r.wait()
 
     assert r.finished
-    assert r.status_code == -15
+    assert r.explain()['signal'] == 'SIGTERM'
     assert not r.ok
 
 

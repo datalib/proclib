@@ -32,4 +32,4 @@ def test_sigpipe_was_used():
     assert len(r.out.split()) == 2
     assert r.ok
     r.history[0].wait()
-    assert r.history[0].status_code == -13
+    assert r.history[0].explain()['signal'] == 'SIGPIPE'
