@@ -1,6 +1,7 @@
+from itertools import chain
 from pytest import fixture
-from proclib.pipe import Pipe
-from proclib.response import Response
+from proclib.pipe import Pipe, make_response
+from proclib.process import Process
 
 
 @fixture
@@ -44,3 +45,15 @@ def test_sigpipe_was_used(res):
 def test_correct_data(res):
     assert len(res.out.split()) == 2
     assert res.ok
+
+
+def test_make_response_pops_proc():
+    procs = chain(
+        [Process(['echo', 'm']) for _ in range(2)],
+        [Process(['echo', 'a'])],
+        )
+    r = make_response(procs)
+
+    assert len(r.history) == 2
+    assert r.out == 'a\n'
+    assert r.command == ['echo', 'a']

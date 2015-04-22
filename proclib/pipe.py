@@ -10,6 +10,13 @@ from .process import Process
 
 
 def make_response(procs):
+    """
+    Given an iterable of processes *procs*, run all of
+    them and pop the last one, returning it as the
+    result of running all of them in a pipe.
+
+    :param procs: An iterable of processes.
+    """
     history = [p.run() for p in procs]
     r = history.pop()
     r.history = history
