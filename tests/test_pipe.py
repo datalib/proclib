@@ -26,10 +26,21 @@ def test_run_pipes_data(pipe):
     assert r.out == 'at\n'
 
 
-def test_sigpipe_was_used():
+@fixture(scope='module')
+def res(request):
     r = Pipe([['yes'], ['head', '-n', '2']]).run()
     r.wait()
-    assert len(r.out.split()) == 2
-    assert r.ok
-    r.history[0].wait()
-    assert r.history[0].explain()['signal'] == 'SIGPIPE'
+    request.addfinalizer(r.close)
+    return r
+
+
+def test_sigpipe_was_used(res):
+    yes = res.history[0]
+    yes.wait()
+    assert yes.explain()['signal'] == 'SIGPIPE'
+    assert not yes.ok
+
+
+def test_correct_data(res):
+    assert len(res.out.split()) == 2
+    assert res.ok
