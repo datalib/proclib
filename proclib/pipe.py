@@ -5,7 +5,6 @@
     Implements the Pipe object.
 """
 
-
 from subprocess import PIPE
 from .process import Process
 
