@@ -64,9 +64,8 @@ class Pipe(object):
         """
         Runs the processes. Internally this calls the
         ``spawn_procs`` method but converts them into
-        responses via their ``run`` method and returns
-        a Response object. This also closes the stdout
-        file handles of all but the last response.
+        responses via their ``run`` method and the
+        ``make_response`` method.
         """
         procs = list(self.spawn_procs())
         procs[0].pipe(self.data)
