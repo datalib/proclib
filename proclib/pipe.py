@@ -9,24 +9,6 @@ from subprocess import PIPE
 from .process import Process
 
 
-def make_response(procs):
-    """
-    Given an iterable of processes *procs*, run all of
-    them and pop the last one, returning it as the
-    result of running all of them in a pipe.
-
-    :param procs: An iterable of processes.
-    """
-    history = [p.run() for p in procs]
-    r = history.pop()
-    r.history = history
-
-    for res in r.history:
-        res.stdout.close()
-
-    return r
-
-
 class Pipe(object):
     """
     A Pipe object represents and starts the parallel
@@ -60,6 +42,24 @@ class Pipe(object):
             stdout = proc.process.stdout
             yield proc
 
+    @staticmethod
+    def make_response(procs):
+        """
+        Given an iterable of processes *procs*, run all of
+        them and pop the last one, returning it as the
+        result of running all of them in a pipe.
+
+        :param procs: An iterable of processes.
+        """
+        history = [p.run() for p in procs]
+        r = history.pop()
+        r.history = history
+
+        for res in r.history:
+            res.stdout.close()
+
+        return r
+
     def run(self):
         """
         Runs the processes. Internally this calls the
@@ -70,4 +70,4 @@ class Pipe(object):
         """
         procs = list(self.spawn_procs())
         procs[0].pipe(self.data)
-        return make_response(procs)
+        return self.make_response(procs)

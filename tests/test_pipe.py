@@ -1,6 +1,6 @@
 from itertools import chain
 from pytest import fixture
-from proclib.pipe import Pipe, make_response
+from proclib.pipe import Pipe
 from proclib.process import Process
 
 
@@ -52,7 +52,7 @@ def test_make_response_pops_proc():
         [Process(['echo', 'm']) for _ in range(2)],
         [Process(['echo', 'a'])],
         )
-    r = make_response(procs)
+    r = Pipe.make_response(procs)
 
     assert len(r.history) == 2
     assert r.out == 'a\n'
