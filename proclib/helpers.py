@@ -5,7 +5,6 @@
     Helper utility functions.
 """
 
-
 import shlex
 import signal
 

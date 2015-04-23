@@ -4,7 +4,6 @@
     Implements the Response class.
 """
 
-
 from .helpers import cached_property
 from signalsdb.api import explain
 

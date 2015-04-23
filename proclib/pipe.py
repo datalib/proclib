@@ -5,7 +5,6 @@
     Implements the Pipe object.
 """
 
-
 from subprocess import PIPE
 from .process import Process
 
@@ -43,17 +42,15 @@ class Pipe(object):
             stdout = proc.process.stdout
             yield proc
 
-    def run(self):
+    @staticmethod
+    def make_response(procs):
         """
-        Runs the processes. Internally this calls the
-        ``spawn_procs`` method but converts them into
-        responses via their ``run`` method and returns
-        a Response object. This also closes the stdout
-        file handles of all but the last response.
-        """
-        procs = list(self.spawn_procs())
-        procs[0].pipe(self.data)
+        Given an iterable of processes *procs*, run all of
+        them and pop the last one, returning it as the
+        result of running all of them in a pipe.
 
+        :param procs: An iterable of processes.
+        """
         history = [p.run() for p in procs]
         r = history.pop()
         r.history = history
@@ -62,3 +59,14 @@ class Pipe(object):
             res.stdout.close()
 
         return r
+
+    def run(self):
+        """
+        Runs the processes. Internally this calls the
+        ``spawn_procs`` method but converts them into
+        responses via their ``run`` method and the
+        ``make_response`` method.
+        """
+        procs = list(self.spawn_procs())
+        procs[0].pipe(self.data)
+        return self.make_response(procs)
