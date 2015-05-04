@@ -16,7 +16,7 @@ setup(
 
     packages=['proclib'],
     install_requires=[
-        'signalsdb==0.1',
+        'signalsdb==0.1.2',
     ],
     extras_require={
         'test': ['pytest'],
