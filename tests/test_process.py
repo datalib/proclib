@@ -1,3 +1,4 @@
+import warnings
 from contextlib import closing
 from pytest import fixture
 from proclib.process import Process
@@ -48,3 +49,14 @@ def test_iter(proc):
     with proc.run() as r:
         assert list(r) == (['data\n'] * 3)
         assert not r.stdout.closed
+
+
+def test_explain_warning(proc):
+    r = proc.run()
+    r.terminate()
+    r.wait()
+
+    with warnings.catch_warnings(record=True) as w:
+        warnings.simplefilter('always')
+        r.explain()
+        assert issubclass(w[-1].category, DeprecationWarning)
