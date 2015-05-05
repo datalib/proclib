@@ -38,7 +38,7 @@ def res(request):
 def test_sigpipe_was_used(res):
     yes = res.history[0]
     yes.wait()
-    assert yes.explain()['signal'] == 'SIGPIPE'
+    assert yes.explain_signal()['signal'] == 'SIGPIPE'
     assert not yes.ok
 
 

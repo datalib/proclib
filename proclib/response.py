@@ -107,7 +107,7 @@ class Response(object):
     def __exit__(self, *_):
         self.close()
 
-    def explain(self):
+    def explain_signal(self):
         """
         Explains (provides the name, the description,
         and the default action of) the signal that

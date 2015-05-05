@@ -25,8 +25,10 @@ def test_terminate_cat(proc):
     r.terminate()
     r.wait()
 
+    sig = r.explain_signal()
     assert r.finished
-    assert r.explain()['signal'] == 'SIGTERM'
+    assert sig['signal'] == 'SIGTERM'
+    assert sig['id'] == 15
     assert not r.ok
 
 
