@@ -30,17 +30,18 @@ def restore_signals(signals=TO_RESTORE):
         signal.signal(sig, signal.SIG_DFL)
 
 
-def str_parse(cmds):
+def str_parse(cmds, pipe_operator='|'):
     """
     Given a string of commands *cmds* yield the
-    command in chunks, separated by the pipe
-    operator '|'.
+    command in chunks, separated by the *pipe_operator*
+    defaulting to '|'.
 
     :param cmds: String of commands.
+    :param pipe_operator: The pipe operator.
     """
     buff = []
     for item in shlex.split(cmds):
-        if item == '|':
+        if item == pipe_operator:
             yield buff
             buff = []
             continue
@@ -75,12 +76,12 @@ class cached_property(object):
     """
 
     def __init__(self, func):
-        self.func = func
+        self.getter = func
         self.__name__ = func.__name__
         self.__doc__ = func.__doc__
 
-    def __get__(self, obj, objtype=None):
-        if obj is None:
+    def __get__(self, instance, objtype=None):
+        if instance is None:
             return self
-        res = obj.__dict__[self.__name__] = self.func(obj)
+        res = instance.__dict__[self.__name__] = self.getter(instance)
         return res
