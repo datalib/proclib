@@ -27,6 +27,10 @@ class Response(object):
         self.stdout = process.stdout
         self.stderr = process.stderr
 
+    def __iter__(self):
+        for line in self.stdout:
+            yield line
+
     @cached_property
     def out(self):
         """

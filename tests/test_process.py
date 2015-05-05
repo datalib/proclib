@@ -41,3 +41,10 @@ def test_context_manager(proc):
     assert r.stdout.closed
     assert r.stderr.closed
     r.wait()
+
+
+def test_iter(proc):
+    proc.pipe(['data\ndata\ndata\n'])
+    with proc.run() as r:
+        assert list(r) == (['data\n'] * 3)
+        assert not r.stdout.closed
