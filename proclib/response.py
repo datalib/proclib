@@ -6,6 +6,7 @@
 
 from .helpers import cached_property
 from signalsdb.api import explain
+import warnings
 
 
 class Response(object):
@@ -120,3 +121,10 @@ class Response(object):
         status = self.status_code
         if status and status < 0:
             return explain(abs(status))
+
+    def explain(self):
+        warnings.warn(
+            'explain is now renamed to explain_signal',
+            DeprecationWarning,
+        )
+        return self.explain_signal()
