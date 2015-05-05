@@ -50,7 +50,6 @@ class Process(object):
         with self.process.stdin as stdin:
             for line in lines:
                 stdin.write(line)
-            stdin.flush()
 
     def run(self):
         """

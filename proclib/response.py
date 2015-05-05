@@ -6,6 +6,7 @@
 
 from .helpers import cached_property
 from signalsdb.api import explain
+import warnings
 
 
 class Response(object):
@@ -26,6 +27,10 @@ class Response(object):
         self.pid = process.pid
         self.stdout = process.stdout
         self.stderr = process.stderr
+
+    def __iter__(self):
+        for line in self.stdout:
+            yield line
 
     @cached_property
     def out(self):
@@ -107,7 +112,7 @@ class Response(object):
     def __exit__(self, *_):
         self.close()
 
-    def explain(self):
+    def explain_signal(self):
         """
         Explains (provides the name, the description,
         and the default action of) the signal that
@@ -116,3 +121,16 @@ class Response(object):
         status = self.status_code
         if status and status < 0:
             return explain(abs(status))
+
+    def explain(self):
+        """
+        Explain the signal that killed the process.
+
+        .. deprecated:: 0.1.3
+           Use `explain_signal` instead.
+        """
+        warnings.warn(
+            'explain is now renamed to explain_signal',
+            DeprecationWarning,
+        )
+        return self.explain_signal()
