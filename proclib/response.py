@@ -130,7 +130,7 @@ class Response(object):
            Use `explain_signal` instead.
         """
         warnings.warn(
-            'explain is now renamed to explain_signal',
+            'use explain_signal instead of explain',
             DeprecationWarning,
         )
         return self.explain_signal()
