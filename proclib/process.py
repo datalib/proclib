@@ -23,8 +23,8 @@ class Process(object):
     """
 
     response_class = Response
-    defaults = dict(universal_newlines=True,
-                    close_fds=True,
+    defaults = dict(close_fds=True,
+                    universal_newlines=True,
                     preexec_fn=restore_signals,
                     stdout=PIPE,
                     stderr=PIPE,

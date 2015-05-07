@@ -24,7 +24,7 @@ Overview
         >>> r.stdout.read()
         'y\ny\ny\ny\ny\ny\ny\ny\ny\ny\n'
         >>> r.close()
-        >>> r.history[0].explain()
+        >>> r.history[0].explain_signal()
         {'action': 'kill',
          'description': 'write on a pipe with no readers',
          'id': 13,
