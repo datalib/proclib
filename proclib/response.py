@@ -121,16 +121,3 @@ class Response(object):
         status = self.status_code
         if status and status < 0:
             return explain(abs(status))
-
-    def explain(self):
-        """
-        Explain the signal that killed the process.
-
-        .. deprecated:: 0.1.3
-           Use `explain_signal` instead.
-        """
-        warnings.warn(
-            'use explain_signal instead of explain',
-            DeprecationWarning,
-        )
-        return self.explain_signal()
