@@ -24,6 +24,11 @@ def test_list_parse(cmd, expected):
     assert list(list_parse(cmd)) == expected
 
 
+def test_parsers_equiv():
+    assert list(str_parse('')) == list(list_parse([]))
+    assert list(str_parse('ng | cat')) == list(list_parse(['ng | cat']))
+
+
 def test_cached_property():
     class Obj(object):
         ctx = []

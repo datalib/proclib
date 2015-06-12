@@ -46,7 +46,8 @@ def str_parse(cmds, pipe_operator='|'):
             buff = []
             continue
         buff.append(item)
-    yield buff
+    if buff:
+        yield buff
 
 
 def list_parse(cmds):
